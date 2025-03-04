@@ -1,0 +1,24 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+load("@test_pypi//:requirements.bzl", "requirement")
+
+compile_pip_requirements(
+    name = "mypy-requirements",
+    src = ":mypy-requirements.in",
+    requirements_txt = ":mypy-requirements_lock.txt",
+)
+
+compile_pip_requirements(
+    name = "requirements",
+    src = ":requirements.in",
+    requirements_txt = ":requirements_lock.txt",
+)
+
+py_binary(
+    name = "main",
+    srcs = ["main.py"],
+    deps = [
+        requirement("grpcio"),
+        "//api:test_proto_py",
+    ],
+)

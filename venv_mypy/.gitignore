@@ -1,0 +1,3 @@
+.venv/
+*_pb2*
+.mypy_cache/
